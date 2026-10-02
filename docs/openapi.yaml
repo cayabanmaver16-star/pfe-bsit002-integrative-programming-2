@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: Employee Management API
+  description: REST API for managing employees and departments (PFEBSIT 002 Lab 3).
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000/api/v1
+    description: Local development server
+tags:
+  - name: Employees
+paths:
+  /employees:
+    get:
+      tags: [Employees]
+      summary: View all employees (supports search and filter)
+      parameters:
+        - name: search
+          in: query
+          required: false
+          description: Search by first name, last name, or email
+          schema:
+            type: string
+          example: juan
+        - name: department
+          in: query
+          required: false
+          description: Filter by department name
+          schema:
+            type: string
+          example: IT
+      responses:
+        '200':
+          description: List of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    post:
+      tags: [Employees]
+      summary: Add an employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeInput'
+      responses:
+        '201':
+          description: Employee created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '422':
+          description: Validation error
+  /employees/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 1
+    get:
+      tags: [Employees]
+      summary: View one employee
+      responses:
+        '200':
+          description: Employee found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          description: Employee not found
+    put:
+      tags: [Employees]
+      summary: Update employee information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeInput'
+      responses:
+        '200':
+          description: Employee updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          description: Employee not found
+        '422':
+          description: Validation error
+    delete:
+      tags: [Employees]
+      summary: Delete an employee
+      responses:
+        '200':
+          description: Employee deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Employee deleted successfully
+        '404':
+          description: Employee not found
+components:
+  schemas:
+    EmployeeInput:
+      type: object
+      required: [first_name, last_name, email, department, position]
+      properties:
+        first_name:
+          type: string
+          example: Juan
+        last_name:
+          type: string
+          example: Dela Cruz
+        email:
+          type: string
+          format: email
+          example: juan@example.com
+        department:
+          type: string
+          example: IT
+        position:
+          type: string
+          example: Programmer
+    Employee:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+        - $ref: '#/components/schemas/EmployeeInput'
+        - type: object
+          properties:
+            created_at:
+              type: string
+              format: date-time
+              example: '2026-08-04T10:00:00Z'
