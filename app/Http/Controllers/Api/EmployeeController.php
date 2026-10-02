@@ -8,9 +8,30 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Employee::all());
+        $query = Employee::with('department');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('department')) {
+            $query->whereHas('department', function ($q) use ($request) {
+                $q->where('name', $request->department);
+            });
+        }
+
+        return response()->json($query->paginate(10));
     }
 
     public function store(Request $request)
@@ -19,18 +40,18 @@ class EmployeeController extends Controller
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'email' => 'required|email|unique:employees,email',
-            'department' => 'required|string|max:100',
+            'department_id' => 'required|integer|exists:departments,id',
             'position' => 'required|string|max:100',
         ]);
 
         $employee = Employee::create($validated);
 
-        return response()->json($employee, 201);
+        return response()->json($employee->load('department'), 201);
     }
 
     public function show($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::with('department')->find($id);
 
         if (!$employee) {
             return response()->json(['message' => 'Employee not found'], 404);
@@ -51,13 +72,13 @@ class EmployeeController extends Controller
             'first_name' => 'sometimes|string|max:100',
             'last_name' => 'sometimes|string|max:100',
             'email' => 'sometimes|email|unique:employees,email,' . $id,
-            'department' => 'sometimes|string|max:100',
+            'department_id' => 'sometimes|integer|exists:departments,id',
             'position' => 'sometimes|string|max:100',
         ]);
 
         $employee->update($validated);
 
-        return response()->json($employee);
+        return response()->json($employee->load('department'));
     }
 
     public function destroy($id)
