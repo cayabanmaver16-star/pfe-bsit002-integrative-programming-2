@@ -14,7 +14,8 @@ class Employee extends Model
         'last_name',
         'email',
         'department_id',
-        'position'
+        'position',
+        'status'
     ];
 
     public function department()

@@ -1,0 +1,556 @@
+{
+  "info": {
+    "_collection_link": "https://go.postman.co/collection/58672083-52b73e01-14c8-4e5e-89d7-d181bcc16f09?source=collection_link",
+    "_exporter_id": "58672083",
+    "_postman_id": "52b73e01-14c8-4e5e-89d7-d181bcc16f09",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "name": "My Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "name": "Get data",
+      "request": {
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "get"
+          ],
+          "raw": "postman-echo.com/get"
+        }
+      },
+      "response": []
+    },
+    {
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "name": "Post data",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}"
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "post"
+          ],
+          "raw": "postman-echo.com/post"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 1 - Welcome page",
+      "request": {
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 4 - POST employee",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "   {\r\n       \"first_name\": \"Juan\",\r\n       \"last_name\": \"Dela Cruz\",\r\n       \"email\": \"juan@example.com\",\r\n       \"department\": \"IT\",\r\n       \"position\": \"Programmer\"\r\n   }"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 4 - GET employees",
+      "request": {
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 4 - GET one employee",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "1"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "query": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "raw": "http://127.0.0.1:8000/api/employees/1?"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 4 - PUT employee",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "   {\r\n       \"position\": \"Senior Programmer\"\r\n   }"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "1"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees/1"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 4 - DELETE employee",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees",
+            "2"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees/2"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 5 - Pagination page 1",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 5 - Pagination page 2",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            }
+          ],
+          "raw": "http://127.0.0.1:8000/api/employees?page=2"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 5 - Search",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "query": [
+            {
+              "key": "search",
+              "value": "juan"
+            }
+          ],
+          "raw": "http://127.0.0.1:8000/api/employees?search=juan"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 5 - Filter by department",
+      "request": {
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "query": [
+            {
+              "key": "department_id",
+              "value": "1"
+            }
+          ],
+          "raw": "http://127.0.0.1:8000/api/employees?department_id=1"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "   {\r\n       \"name\": \"Aljen Paul Domingo\",\r\n       \"email\": \"aljen@example.com\",\r\n       \"password\": \"password123\"\r\n   }"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "register"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/register"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 6 - Login",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "   {\r\n       \"email\": \"aljen@example.com\",\r\n       \"password\": \"password123\"\r\n   }"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "login"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/login"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 6 - Protected route with token",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{auth_secret_0ghp}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "employees"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/employees"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Week 6 - Logout",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{auth_secret_0ghp}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": ""
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "url": {
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "path": [
+            "api",
+            "logout"
+          ],
+          "port": "8000",
+          "protocol": "http",
+          "raw": "http://127.0.0.1:8000/api/logout"
+        }
+      },
+      "response": []
+    }
+  ]
+}

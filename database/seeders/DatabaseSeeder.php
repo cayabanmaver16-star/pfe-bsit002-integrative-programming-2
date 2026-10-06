@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,6 +36,8 @@ class DatabaseSeeder extends Seeder
             ['Rafael', 'Lopez', 'Cashier'],
         ];
 
+        $statuses = ['active', 'inactive', 'on_leave'];
+
         foreach ($people as $i => $p) {
             Employee::create([
                 'first_name' => $p[0],
@@ -41,7 +45,14 @@ class DatabaseSeeder extends Seeder
                 'email' => strtolower($p[0] . '.' . str_replace(' ', '', $p[1])) . '@example.com',
                 'department_id' => $departments[$i % 3]->id,
                 'position' => $p[2],
+                'status' => $statuses[intdiv($i, 3) % 3],
             ]);
         }
+
+        User::create([
+            'name' => 'Demo User',
+            'email' => 'demo@example.com',
+            'password' => Hash::make('password123'),
+        ]);
     }
 }

@@ -31,6 +31,10 @@ class EmployeeController extends Controller
             });
         }
 
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
         return response()->json($query->paginate(10));
     }
 
@@ -42,6 +46,7 @@ class EmployeeController extends Controller
             'email' => 'required|email|unique:employees,email',
             'department_id' => 'required|integer|exists:departments,id',
             'position' => 'required|string|max:100',
+            'status' => 'sometimes|in:active,inactive,on_leave',
         ]);
 
         $employee = Employee::create($validated);
@@ -74,6 +79,7 @@ class EmployeeController extends Controller
             'email' => 'sometimes|email|unique:employees,email,' . $id,
             'department_id' => 'sometimes|integer|exists:departments,id',
             'position' => 'sometimes|string|max:100',
+            'status' => 'sometimes|in:active,inactive,on_leave',
         ]);
 
         $employee->update($validated);
